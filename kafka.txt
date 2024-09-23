@@ -4,23 +4,23 @@
 
                 1.]]Producer: This is the application that sends (or produces) messages to Kafka. For example, a web application can send user activity logs to Kafka.
 
-                2.]]Topic: A topic is like a category or a feed name where records are stored. Producers send data to topics. Each topic can have multiple subscribers (consumers).             
+                2.]]Topic: A topic is like a category or a feed name where records are stored. Producers send data to topics. Each topic can have multiple subscribers 
+                          (consumers).             
 
-                3.]]Consumer: This is the application that reads (or consumes) messages from Kafka. For example, a data analytics system can read user activity logs from a Kafka topic to                                                                                                  
+                3.]]Consumer: This is the application that reads (or consumes) messages from Kafka. For example, a data analytics system can read user activity logs from a 
+                              Kafka topic to process and analyze them.
 
-                              process and analyze them.
+                4.]]Broker: A Kafka broker is a server that runs Kafka. It is responsible for storing the data and serving clients (producers and consumers). Kafka clusters 
+                            are made up of multiple brokers to provide high availability and fault tolerance.
 
-                4.]]Broker: A Kafka broker is a server that runs Kafka. It is responsible for storing the data and serving clients (producers and consumers). Kafka clusters are made up of 
+                5.]]Partition: Each topic in Kafka is split into partitions. Partitions allow Kafka to scale horizontally, as each partition can be hosted on a different 
+                               server.
 
-                           multiple brokers to provide high availability and fault tolerance.
+                6.]]Zookeeper: Kafka uses Zookeeper to manage and coordinate the Kafka brokers. It keeps track of the status of the Kafka cluster nodes and manages the 
+                                configuration  information.
 
-                5.]]Partition: Each topic in Kafka is split into partitions. Partitions allow Kafka to scale horizontally, as each partition can be hosted on a different server.
-
-                6.]]Zookeeper: Kafka uses Zookeeper to manage and coordinate the Kafka brokers. It keeps track of the status of the Kafka cluster nodes and manages the configuration 
-
-                               information.
-
-                7.]]Kafka Connect :-It simplifies the process of integrating Kafka with external data sources (like databases, files, or other messaging systems) and data sinks (where data 
+                7.]]Kafka Connect :-It simplifies the process of integrating Kafka with external data sources (like databases, files, or other messaging systems) and data 
+                                     sinks (where data 
 
                                     is stored or processed).
                        1.]]]]]Key Concepts of Kafka Connect:
@@ -29,26 +29,25 @@
                                              1.]]Source Connector: Brings data into Kafka from external systems (e.g., a database, file system, or HTTP endpoint).
                                              2.]]Sink Connector: Writes data from Kafka to external systems (e.g., a database, file system, or search index).
 
-                           2.]]Task:- A Task is the unit of work that performs the data copying from or to Kafka. Each connector can have multiple tasks, which allows for parallel data  
+                           2.]]Task:- A Task is the unit of work that performs the data copying from or to Kafka. Each connector can have multiple tasks, which allows for 
+                                      parallel data streaming and improved performance.
 
-                                      streaming and improved performance.
-
-                           3.]]Worker:-- A Worker is a JVM process that runs connectors and their tasks. Workers can be deployed in standalone mode (single worker) or distributed mode 
-
-                                         (multiple workers), with distributed mode providing fault tolerance and scalability.
+                           3.]]Worker:-- A Worker is a JVM process that runs connectors and their tasks. Workers can be deployed in standalone mode (single worker) or 
+                                        distributed mode (multiple workers), with distributed mode providing fault tolerance and scalability.
 
                            4.]]Standalone vs Distributed Mode:
 
-                                                1.]]Standalone Mode: All the connectors and tasks run in a single process. It’s simpler but not fault-tolerant, typically used for 
-
-                                                                     development or small-scale deployments.
-                                                2.]]Distributed Mode: Connectors and tasks run across multiple workers, providing high availability and scalability. This mode is commonly 
-
-                                                                     used in production environments.
+                                                1.]]Standalone Mode: All the connectors and tasks run in a single process. It’s simpler but not fault-tolerant, typically 
+                                                     used for development or small-scale deployments.
+                                                2.]]Distributed Mode: Connectors and tasks run across multiple workers, providing high availability and scalability. This 
+                                                     mode is commonly used in production environments.
  
-                          5.]]Configuration:- Connectors are configured via JSON files or REST APIs. These configurations define what data to read or write, where to connect, and how to 
+                          5.]]Configuration:- Connectors are configured via JSON files or REST APIs. These configurations define what data to read or write, where to 
+                                               connect, and how to 
 
                                               transform the data if needed.
+
+          8.]] Offset:-  In Kafka, an offset is a unique identifier for each message within a partition of a topic. It represents the position of a message in the partition. Offsets are crucial for tracking which messages have been consumed by consumers in a Kafka consumer group.
 
 2.]]How Kafka Works:
 A producer sends messages to a topic. The topic is divided into partitions.
