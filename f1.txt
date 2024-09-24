@@ -1,1 +1,190 @@
-1234
+Microservices:---------
+a]]]
+1.We can create microservices with multiple tech-stack (springboot,django)
+2.Monolithic services are a type of software architecture where all components of an application are tightly integrated into a single, large codebase. 
+	Advantages of Monolithic :-
+		1. Easier to develop, test, and deploy in the initial stages.
+		2.Simple deployment process since everything is in one place.
+	Disadvantage of Monolithic:-
+		1.Lack of Flexibility: Hard to adopt new technologies or frameworks for specific parts of the system.
+		2.Maintenance Challenges: As the codebase grows, maintaining and understanding the system becomes more complex.
+		3.Slow Development: Changes in one area can require redeployment of the entire application, slowing down the development process.
+
+3.key points:-
+	1.Each service operates independently, allowing developers to work on, deploy, and scale them separately.
+	2.Each microservice typically has its own database or data storage, designed to meet its specific needs.
+	3.Developers can choose the best technology stack for each service. For example, one service might be written in Python and another in Java, depending on the needs and expertise.
+	4.Since services are independent, the failure of one service doesn't necessarily bring down the entire system. 
+	5.Services typically communicate over a network, using protocols like (api calls) HTTP/HTTPS, gRPC, or messaging queues like Kafka or RabbitMQ.
+
+4.Challenges;-
+	1.Managing multiple services can be complex, especially in terms of deployment, monitoring, and coordination.
+	2.Data Consistency:-Since data is distributed across services, ensuring consistency can be challenging.
+	3.The overhead of managing network communication between services can introduce latency and potential points of failure.
+	4.A microservices architecture typically requires more sophisticated DevOps practices, including continuous integration/continuous deployment (CI/CD) pipelines,monitoring, and logging.
+
+5.Best Practices for Implementing Microservices:
+	1.Implement strategies like circuit breakers, retries, and fallbacks to handle failures gracefully.
+	2.Use an API gateway to manage communication between clients and services, handle cross-cutting concerns like authentication, logging, and rate limiting.
+	3.Use containers (e.g., Docker) to package and deploy services consistently across different environments.
+	4.Implement service discovery mechanisms to allow services to find each other dynamically in a distributed system.
+	5.Use centralized logging and monitoring tools to gain insights into the health and performance of your services.
+
+6.we use service registry  is use to track all the information of services by their (ip address,port) like when the services are up and when they are down
+1.Dependencyes:-
+a]]Spring Cloud Bootstrap
+		1.))Purpose: Spring Cloud Bootstrap helps load configuration settings before your main application starts running.
+		2.))To load settings from an external source (like a Config Server) early in the applications startup process.
+		3.))Configuration Files: You use a bootstrap.yml or bootstrap.properties file to specify where to find the configuration settings and any other critical setup   
+        information.
+				   1.spring:
+				  application:
+					name: myapp
+				  cloud:
+					config:
+					  uri: http://config-server:8888
+
+							  ex:---1.]]spring.application.name: Defines the name of your application.
+									2.]]spring.cloud.config.uri: Specifies the URL of the Config Server where the configuration settings are stored.
+b.]]Eureka Server [Service Registery]
+     0]]add dependency [spring-cloud-starter-netflix-eureka-server]
+     0]]@EnableEurekaServer annotation :----is used in a Spring Boot application to set up a Eureka Server, which is the service registry that allows microservices to register themselves and discover other services.
+1.))Eureka Server acts as a service registry where microservices can register themselves and discover other services.
+2.))Key Features
+
+		1.]Service Registration: Microservices register themselves with the Eureka Server at startup. This involves providing information like service name, host, port, and  metadata.
+
+		2.]Service Discovery: Other services can query the Eureka Server to find instances of a particular service. This is done via REST API calls to the Eureka Server.
+
+		3.]Health Checks: Eureka Server can perform periodic health checks to ensure that registered services are up and running. If a service fails to respond, Eureka Server will mark it as unavailable.
+
+		4.]Self-Healing: Eureka Server supports self-healing by allowing services to deregister themselves if they are no longer available, which helps maintain an up-to-date registry.
+		ex:--
+						server:
+				  port: 8761
+
+				eureka:
+				  client:
+					registerWithEureka: false
+					fetchRegistry: false
+					
+					1.]]registerWithEureka: false :--it doesnot register itself as service 
+                    2.]]fetchRegistry: false:-- it as it doesnt register in the registery other services cant fetch the instance of this registery.
+
+c.]]spring cloud 
+		
+d.]]Eureka Discovery client :-
+		The Eureka Discovery Client is a component in a microservices architecture that enables a service to interact with the Eureka Server. Specifically, it allows a service to register itself with the Eureka Server and to discover other services that are registered there.
+		*******[Yes, a server can interact with another server without using Eureka Discovery Client. ]***********
+		1.]]]How Eureka Discovery Client Works
+		     a]]]Service Registration:
+
+					When a microservice starts, it automatically registers itself with the Eureka Server if the Eureka Discovery Client is enabled.
+					This registration process involves sending details like the service's hostname, IP address, port number, and service name to the Eureka Server.
+			 
+			 b]]Service Discovery:
+
+					The service can use the Eureka Discovery Client to query the Eureka Server for information about other services.
+					This allows the service to find the instances of other services it needs to communicate with.
+					
+		     c]]]Heartbeat and Status:
+
+					After registration, the service periodically sends a heartbeat to the Eureka Server to indicate that it is still running.
+					If the service fails to send heartbeats, the Eureka Server will mark the service as unavailable.
+		     
+			 d]]]Load Balancing:
+
+					The Eureka Discovery Client can be integrated with client-side load balancing (using tools like Ribbon) to distribute requests among multiple instances of a service.
+					
+		2.]]Example ;--we have an service registery here and to connect it with a users-service ;----
+		               a]]spring-cloud-starter-netflix-eureka-client
+					   d]]@EnableEurekaClient:---( is an annotation in Spring Cloud that is used to make a Spring Boot application register itself as a Eureka client. This means that the application will automatically register with                                                    a Eureka server (a service registry) and can also discover other services registered with Eureka.)
+					   e]]spring.application.name=my-service
+							server.port=8080
+
+							eureka.client.service-url.defaultZone=http://localhost:8761/eureka/  :---url of the eureka server
+							eureka.instance.prefer-ip-address=true
+							
+							1.]]Key Properties:---
+
+										spring.application.name: The name of your service. This is how other services will refer to it.
+										
+										eureka.client.service-url.defaultZone: The URL of the Eureka Server where the service should register.
+										
+										eureka.instance.prefer-ip-address: If true, the service will register with its IP address rather than its hostname.
+										
+							2.]]RestTemplate:--- is a synchronous client in Spring that is used for making HTTP requests to RESTful web services. It simplifies communication with HTTP servers and enforces RESTful principles.                                                        RestTemplate is often used for microservices communication or consuming third-party APIs.[restTemplate.getforobject()]
+							                1.]]when calling one service or more use service-name instead of localhost/port 
+											2.]]When you use @LoadBalanced with a RestTemplate, it allows you to make HTTP requests to services by their logical names (e.g., http://my-service) rather than hardcoding IP addresses or URLs.implement it on config bean
+											
+							3.]]Feign Client:---- 
+							********************[use thise instead of restTemplate its easierand readble]************************
+							   1.]]Feign is a Java HTTP client that simplifies the process of making RESTful web service calls. It allows you to write HTTP clients with simple annotations, making your code more readable and easier                                      to maintain.                   
+							   2.]]Dependcy OpenFeign
+							   3.]]main class @EnableFeignClients
+							   4.]]Create an interface for the Feign client. Annotate it with @FeignClient and define methods for your REST endpoints.example:---
+							     @FeignClient(name = "my-service")
+										public interface MyServiceClient {
+
+											@GetMapping("/endpoint")
+											String getData();
+
+											@PostMapping("/endpoint")
+											void postData(@RequestBody MyRequest request);
+										}
+								5.]]Inject the Feign client into your services or controllers and use it to make REST calls.
+								
+		 3.]] Api Gateway:---- An API Gateway is a server that acts as an API front-end, receiving requests from clients, routing them to the appropriate microservices, and then returning the responses back to the clients. I
+		     1.]]Api gateway solution:[its an microservice we create a separte microservice for it add some config in its application properties]
+			         1.]]Spring Cloud Gateway: A popular choice within the Spring ecosystem, it provides a flexible, customizable gateway solution with built-in support for routing, filters, and load balancing.
+                                               1.]]dependency [implementation 'org.springframework.cloud:spring-cloud-starter-gateway'],[spring reactive web]
+											   2.]]Configure routes and filters in your application.yml or application.properties file.
+											      1.]]example:--spring:
+																		  cloud:
+																			gateway:
+																			  routes:
+																				- id: serviceA
+																				  uri: lb://serviceA
+																				  predicates:
+																					- Path=/serviceA/**
+																				  filters:
+																					- StripPrefix=1
+
+																				- id: serviceB
+																				  uri: lb://serviceB
+																				  predicates:
+																					- Path=/serviceB/**  ******[if we want to add an external url that one of inside a service we can write it as [path=/serviceB/**,/url/**],[for all                                                                                                                 Path=/**]********************
+																		
+                                                          *]]/somePath/**: This pattern matches all requests where the path starts with /somePath/. The ** is a wildcard that matches zero or more path segments.
+														  *******************************[we do loadblancing with the help of feignclient ]********************
+														  *]] uri: lb://serviceA:---here it bascially call for the loadbase 
+														  *]]we can connect mutliple service inside api gateway in its application properties
+														  
+       4.]]Config Server :------- It is a centralized configuration server It allows you to manage and serve configuration properties for multiple microservices or applications in a centralized and version-controlled manner,                                         typically using a Git repository.It is also a microservice .
+	   
+	   
+	                              1.]]dependency :--pring-cloud-config-server
+								  2.]]Enable config Server:----In your Spring Boot application class, you need to annotate it with @EnableConfigServer to enable the Config Server functionality.
+								  3.]]Configure the Server
+                                         Next, you need to configure the Config Server by specifying where it should retrieve the configurations from. This is usually done in the application.yml or application.properties file.
+										 
+										 server:
+												  port: 8888
+
+												spring:
+												  cloud:
+													config:
+													  server:
+														git:
+														  uri: https://github.com/your-repo/config-repo
+														  clone-on-start: true
+                                             1.]]first we create a repo in github
+											 2.]]then we craete a file name appliacation.yml/properties .
+											   1]] Add the config of each service client on thise file of different microservices
+											 3.]]Copy the url of that repo and paste it on uri
+							     4.]]Config Client :----When working with a Spring Cloud Config Client, it allows your application to fetch configuration properties from a centralized Config Server.[use it to make every service client as an config-client]                        1]] spring.config.import 
+								                   2]]inside of application properties/yml config/service client we have to add thise properties   cloud:
+																																						config:
+																																						  uri: http://localhost:8888  :---url of config server
+												   3]]Now we have to delet the properties of eureka server as now there is an connection establish between the config client and the config server
+												   4]]we can write config properties on multiple file create on git repo so now to use any of the file we can use
