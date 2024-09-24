@@ -55,3 +55,16 @@ The messages within each partition are stored in a specific order.
 Consumers read messages from the partitions of a topic. Consumers can be grouped, and Kafka ensures that each message is processed by one consumer in a group.
 Kafka stores these messages for a configurable amount of time, allowing consumers to read them at their own pace.
 
+3.]]Kafka Installation:- 1]OpenSource Apache Kafka
+                         2]Confluent Kafka
+                         3]Kafka Offset Exploarer
+
+4.]]Command line particle :----
+1]open kafka in terminal then start zookeeper [bin/zookeeper-server-start.sh config/zookeeper.properties] it default port 2181.
+2]start kafka [bin/kafka-server-start.sh config/server.properties] default port -9092
+3]Create Topic :--[bin/kafka-topics.sh --bootstrap-server localhost:9092 --create --topic [topic_name]-topic --partitions 3 --replication-factor 1]
+We can create any number of topics
+       1]Topic-list:- To get topic list [bin/kafka-topics.sh --bootstrap-server localhost:9092 --list]
+       2]Describe Topic List:- To describ the topic its name,partition,leader,replicas [bin/kafka-topics.sh --bootstrap-server localhost:9092 --describe --topic [topic name]-topic]
+
+4]Add Offset Explorer :- add connection in offset explorer to see the broker/topics/partition.
