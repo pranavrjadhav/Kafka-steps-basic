@@ -68,3 +68,6 @@ We can create any number of topics
        2]Describe Topic List:- To describ the topic its name,partition,leader,replicas [bin/kafka-topics.sh --bootstrap-server localhost:9092 --describe --topic [topic name]-topic]
 
 4]Add Offset Explorer :- add connection in offset explorer to see the broker/topics/partition.
+
+5]Create Producer :-[bin/kafka-console-producer.sh --broker-list localhost:9092 --topic [topic_name]-topic] it can contain multiple no of topics in list.After this it will give you to enter the message
+6]Create Consumer :- [bin/kafka-console-producer.sh --bootstrap-server localhost:9092 --topic [topic_name]-topic --from-beginning]
